@@ -502,10 +502,20 @@ local assetsHeader = marketplaceTab:CollapsingHeader({ Title = "Assets" })
 local assetId = 1234567890
 
 assetsHeader:InputInt({
-    Label = "AssetId",
+    Label = "Id",
     Value = 1234567890,
     Callback = function(self, int: number)
        assetId = int
+    end,
+})
+
+local assetVersion = 0
+
+assetsHeader:InputInt({
+    Label = "Version",
+    Value = 0,
+    Callback = function(self, int: number)
+       assetVersion = int
     end,
 })
 
@@ -518,7 +528,7 @@ assetsHeader:Button({
 		end
 		
 		for _, value: Instance in selected do
-            for _, object in game:GetObjects(Content.fromAssetId(assetId).Uri) do
+            for _, object in game:GetObjects(`https://assetdelivery.roblox.com/v1/asset/?id={assetId}&version={assetVersion}`) do
                 object.Parent = value
             end
 		end
