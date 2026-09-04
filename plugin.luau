@@ -559,9 +559,6 @@ uploadHeader:Button({
         end
     end,
 })
-maid:Add(button.Click:Connect(function()
-	window:ToggleVisibility()
-end))
 
 local studioTab = window:CreateTab({
 	Name = "Studio",
