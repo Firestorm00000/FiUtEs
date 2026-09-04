@@ -560,24 +560,34 @@ assetsHeader:Button({
 })
 
 uploadHeader:Button({
-    Text = "Upload Selected as Model",
+    Text = "Upload",
+
     Callback = function()
         local selected = selection:Get()
+
         if #selected == 0 then
             return println("Nothing selected to upload. Skipping...")
         end
 
         for _, value: Instance in selected do
-            local success, result = pcall(
-                assetService.UploadAssetAsync,
-                assetService,
-                value,
-                Enum.AssetType.Model
-            )
-            if success then
-                println(`Uploaded "{value.Name}" as a new asset. ID: {result}`)
-            else
+            local success, result, assetIdOrError = pcall(function()
+                return assetService:CreateAssetAsync(
+                    value,
+                    Enum.AssetType.Model,
+                    {
+                        Name = value.Name,
+                        Description = "",
+                        IsPackage = true,
+                    }
+                )
+            end)
+
+            if not success then
                 warnln(`Failed to upload "{value.Name}": {result}`)
+            elseif result == Enum.CreateAssetResult.Success then
+                println(`Uploaded "{value.Name}" as a new asset. ID: {assetIdOrError}`)
+            else
+                warnln(`Failed to upload "{value.Name}": {assetIdOrError}`)
             end
         end
     end,
