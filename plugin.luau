@@ -1,11 +1,12 @@
 --!strict
+--!optimize2
 local players = game:GetService("Players")
 local starterPlayer = game:GetService("StarterPlayer")
 local selection = game:GetService("Selection")
 local serializationService = game:GetService("SerializationService")
 local httpService = game:GetService("HttpService")
 local assetService = game:GetService("AssetService")
-local toolbar = plugin:CreateToolbar("Sensation")
+local toolbar = plugin:CreateToolbar("EvilImasUtilities")
 
 local packages = {}
 local methods = {}
@@ -85,11 +86,11 @@ return function(name: string)
 end]]
 
 local function println(output: string)
-	print(`[Sensation Utilities]: {output}`)
+	print(`[Studio Multitool]: {output}`)
 end
 
 local function warnln(output: string)
-	warn(`[Sensation Utilities]: {output}`)
+	warn(`[Studio Multitool]: {output}`)
 end
 
 local function applyPropertiesAndChildren(instance: Instance, properties: { [string]: any }?, children: { Instance }?)
@@ -193,7 +194,7 @@ local function extractAsync(moduleScript: ModuleScript)
 	return selection:Set({ cloneAsync(originalModule, { Parent = moduleScript.Parent }) })
 end
 
-local button = toolbar:CreateButton("Sensation Utilities", "Toggles the built-in interface.", Content.fromAssetId(16517502292).Uri)
+local button = toolbar:CreateButton("Studio Multitool", "Toggles the built-in interface.", Content.fromAssetId(16517502292).Uri)
 
 println("Loading packages...")
 local packageUrl = "https://github.com/Adi0nt/Sensation-Utilities-Plugin/raw/refs/heads/main/packages.rbxm"
@@ -313,7 +314,7 @@ reGui:DefineTheme("Sensation", {
 })
 
 local window = reGui:TabsWindow({
-	Title = "Sensation Utilities",
+	Title = "Studio Multitool",
 	Theme = "Sensation",
 	Size = UDim2.new(0, 400, 0, 300),
 	NoScroll = true,
