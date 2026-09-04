@@ -498,6 +498,7 @@ local marketplaceTab = window:CreateTab({
 })
 
 local assetsHeader = marketplaceTab:CollapsingHeader({ Title = "Assets" })
+local uploadHeader = marketplaceTab:CollapsingHeader({ Title = "Upload" })
 
 local assetId = 1234567890
 
@@ -535,6 +536,33 @@ assetsHeader:Button({
     end,
 })
 
+uploadHeader:Button({
+    Text = "Upload Selected as Model",
+    Callback = function()
+        local selected = selection:Get()
+        if #selected == 0 then
+            return println("Nothing selected to upload. Skipping...")
+        end
+
+        for _, value: Instance in selected do
+            local success, result = pcall(
+                assetService.UploadAssetAsync,
+                assetService,
+                value,
+                Enum.AssetType.Model
+            )
+            if success then
+                println(`Uploaded "{value.Name}" as a new asset. ID: {result}`)
+            else
+                warnln(`Failed to upload "{value.Name}": {result}`)
+            end
+        end
+    end,
+})
+maid:Add(button.Click:Connect(function()
+	window:ToggleVisibility()
+end))
+
 local studioTab = window:CreateTab({
 	Name = "Studio",
 })
@@ -565,29 +593,6 @@ studioHeader:Button({
 	end,
 })
 
-studioHeader:Button({
-    Text = "Upload Selected as Model",
-    Callback = function()
-        local selected = selection:Get()
-        if #selected == 0 then
-            return println("Nothing selected to upload. Skipping...")
-        end
-
-        for _, value: Instance in selected do
-            local success, result = pcall(
-                assetService.UploadAssetAsync,
-                assetService,
-                value,
-                Enum.AssetType.Model
-            )
-            if success then
-                println(`Uploaded "{value.Name}" — new asset ID: {result}`)
-            else
-                warnln(`Failed to upload "{value.Name}": {result}`)
-            end
-        end
-    end,
-})
 maid:Add(button.Click:Connect(function()
 	window:ToggleVisibility()
 end))
