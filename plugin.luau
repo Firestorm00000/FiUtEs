@@ -4,7 +4,7 @@ local starterPlayer = game:GetService("StarterPlayer")
 local selection = game:GetService("Selection")
 local serializationService = game:GetService("SerializationService")
 local httpService = game:GetService("HttpService")
-
+local assetService = game:GetService("AssetService")
 local toolbar = plugin:CreateToolbar("Sensation")
 
 local packages = {}
@@ -565,6 +565,29 @@ studioHeader:Button({
 	end,
 })
 
+studioHeader:Button({
+    Text = "Upload Selected as Model",
+    Callback = function()
+        local selected = selection:Get()
+        if #selected == 0 then
+            return println("Nothing selected to upload. Skipping...")
+        end
+
+        for _, value: Instance in selected do
+            local success, result = pcall(
+                assetService.UploadAssetAsync,
+                assetService,
+                value,
+                Enum.AssetType.Model
+            )
+            if success then
+                println(`Uploaded "{value.Name}" — new asset ID: {result}`)
+            else
+                warnln(`Failed to upload "{value.Name}": {result}`)
+            end
+        end
+    end,
+})
 maid:Add(button.Click:Connect(function()
 	window:ToggleVisibility()
 end))
