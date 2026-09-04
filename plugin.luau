@@ -536,6 +536,28 @@ assetsHeader:Button({
     end,
 })
 
+assetsHeader:Button({
+    Text = "Insert Latest",
+    Callback = function()
+        local selected = selection:Get()
+        if #selected == 0 then
+            return println("Nothing is selected to insert the asset into. Skipping...")
+        end
+
+        for _, value: Instance in selected do
+            local success, objects = pcall(game.GetObjects, game, `https://assetdelivery.roblox.com/v1/asset/?id={assetId}`)
+            if success then
+                for _, object in objects do
+                    object.Parent = value
+                end
+                println(`Inserted latest version of asset {assetId} into "{value.Name}"`)
+            else
+                warnln(`Failed to fetch asset {assetId}: {objects}`)
+            end
+        end
+    end,
+})
+
 uploadHeader:Button({
     Text = "Upload Selected as Model",
     Callback = function()
