@@ -593,6 +593,8 @@ uploadHeader:Button({
     end,
 })
 
+--ill add like asset id return, desc, makepublic, and name later 
+
 local studioTab = window:CreateTab({
 	Name = "Studio",
 })
