@@ -6,7 +6,7 @@ local selection = game:GetService("Selection")
 local serializationService = game:GetService("SerializationService")
 local httpService = game:GetService("HttpService")
 local assetService = game:GetService("AssetService")
-local toolbar = plugin:CreateToolbar("EvilImasUtilities")
+local toolbar = plugin:CreateToolbar("Sensation Utilities")
 
 local packages = {}
 local methods = {}
@@ -86,11 +86,11 @@ return function(name: string)
 end]]
 
 local function println(output: string)
-	print(`[Studio Multitool]: {output}`)
+	print(`[Sensation Utilities]: {output}`)
 end
 
 local function warnln(output: string)
-	warn(`[Studio Multitool]: {output}`)
+	warn(`[Sensation Utilities]: {output}`)
 end
 
 local function applyPropertiesAndChildren(instance: Instance, properties: { [string]: any }?, children: { Instance }?)
