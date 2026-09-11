@@ -499,7 +499,6 @@ local marketplaceTab = window:CreateTab({
 })
 
 local assetsHeader = marketplaceTab:CollapsingHeader({ Title = "Assets" })
-local uploadHeader = marketplaceTab:CollapsingHeader({ Title = "Upload" })
 
 local assetId = 1234567890
 
@@ -554,40 +553,6 @@ assetsHeader:Button({
                 println(`Inserted latest version of asset {assetId} into "{value.Name}"`)
             else
                 warnln(`Failed to fetch asset {assetId}: {objects}`)
-            end
-        end
-    end,
-})
-
-uploadHeader:Button({
-    Text = "Upload",
-
-    Callback = function()
-        local selected = selection:Get()
-
-        if #selected == 0 then
-            return println("Nothing selected to upload. Skipping...")
-        end
-
-        for _, value: Instance in selected do
-            local success, result, assetIdOrError = pcall(function()
-                return assetService:CreateAssetAsync(
-                    value,
-                    Enum.AssetType.Model,
-                    {
-                        Name = value.Name,
-                        Description = "",
-                        IsPackage = true,
-                    }
-                )
-            end)
-
-            if not success then
-                warnln(`Failed to upload "{value.Name}": {result}`)
-            elseif result == Enum.CreateAssetResult.Success then
-                println(`Uploaded "{value.Name}" as a new asset. ID: {assetIdOrError}`)
-            else
-                warnln(`Failed to upload "{value.Name}": {assetIdOrError}`)
             end
         end
     end,
