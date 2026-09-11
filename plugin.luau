@@ -194,7 +194,7 @@ local function extractAsync(moduleScript: ModuleScript)
 	return selection:Set({ cloneAsync(originalModule, { Parent = moduleScript.Parent }) })
 end
 
-local button = toolbar:CreateButton("Studio Multitool", "Toggles the built-in interface.", Content.fromAssetId(16517502292).Uri)
+local button = toolbar:CreateButton("Sensation Utilities", "Toggles the built-in interface.", Content.fromAssetId(16517502292).Uri)
 
 println("Loading packages...")
 local packageUrl = "https://github.com/Adi0nt/Sensation-Utilities-Plugin/raw/refs/heads/main/packages.rbxm"
@@ -314,7 +314,7 @@ reGui:DefineTheme("Sensation", {
 })
 
 local window = reGui:TabsWindow({
-	Title = "Studio Multitool",
+	Title = "Sensation Utilities",
 	Theme = "Sensation",
 	Size = UDim2.new(0, 400, 0, 300),
 	NoScroll = true,
